@@ -3,4 +3,7 @@
 # Each path exempts that folder and all nested subfolders.
 
 00--init/scripts
-01--Portfolio/assets
+01--Portfolio
+
+# URL-bound: folder name is the live public path /sled-mywcbracket/.
+sled-mywcbracket
