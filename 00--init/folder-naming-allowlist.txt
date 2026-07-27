@@ -1,0 +1,6 @@
+# Relative paths from repo root that are intentionally exempt from NN--Name.
+# One path per line. Blank lines and lines starting with # are ignored.
+# Each path exempts that folder and all nested subfolders.
+
+00--init/scripts
+01--Portfolio/assets

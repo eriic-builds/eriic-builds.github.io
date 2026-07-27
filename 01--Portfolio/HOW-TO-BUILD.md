@@ -6,7 +6,7 @@ Use this guide when you are ready to build and deploy your portfolio while keepi
 
 ## Build Model
 
-- portfolio folder = source code
+- 01--Portfolio folder = source code
 - repository publish target = live website files
 - output must include an index.html at the publish root
 
@@ -60,7 +60,7 @@ Choose one deployment path and stay consistent.
 
 ### Option A: Manual Publish To Root
 
-1. Build in portfolio:
+1. Build in 01--Portfolio:
 
 ```bash
 npm run build
@@ -73,7 +73,7 @@ Use this when you want full manual control.
 
 ### Option B: GitHub Actions Deploy Recommended
 
-1. Build in portfolio from CI.
+1. Build in 01--Portfolio from CI.
 2. Publish dist output automatically to Pages.
 
 Use this to reduce mistakes and keep deploy repeatable.
