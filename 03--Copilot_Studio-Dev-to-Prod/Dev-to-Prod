@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Diamond Tenant - Copilot Studio DEV to PROD Learning Guide</title>
+
+<style>
+body{
+    font-family:Segoe UI,Arial;
+    max-width:1200px;
+    margin:auto;
+    padding:30px;
+    background:#f7f9fc;
+}
+h1{color:#0067b8;}
+h2{
+    background:#0067b8;
+    color:white;
+    padding:10px;
+    border-radius:6px;
+}
+.step{
+    background:white;
+    border-left:6px solid #0067b8;
+    padding:16px;
+    margin:14px 0;
+    border-radius:6px;
+}
+.check{
+    background:#e8f5e9;
+    padding:10px;
+    border-radius:6px;
+}
+.warning{
+    background:#fff3cd;
+    padding:10px;
+    border-radius:6px;
+}
+.objective{
+    background:#eaf4ff;
+    padding:16px;
+    border-radius:6px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🚀 Diamond Tenant Copilot Studio: DEV → TEST → PROD Learning Journey</h1>
+
+<div class="objective">
+<h3>Learning Objective</h3>
+<p>
+Build a Copilot Studio agent in DEV, package it using Power Platform Solutions,
+promote it through TEST, and deploy it to Microsoft Teams and Microsoft 365 Copilot,
+following the same lifecycle discussed in the blog.
+</p>
+</div>
+
+<h2>Phase 0 - Prepare Diamond Tenant</h2>
+
+<div class="step">
+<input type="checkbox">
+<b>Claim your Diamond Tenant</b>
+
+<ul>
+<li>Open MDX</li>
+<li>Claim Diamond Tenant</li>
+<li>Launch tenant</li>
+<li>Verify Copilot Studio opens</li>
+</ul>
+</div>
+
+<div class="step">
+<input type="checkbox">
+<b>Attach Azure Subscription</b>
+
+<ul>
+<li>Request BYOT Azure subscription</li>
+<li>Associate with Diamond Tenant</li>
+<li>Deploy Agent 365 Add-On</li>
+</ul>
+</div>
+
+<div class="warning">
+Do NOT change tenant passwords.
+The Diamond documentation explicitly warns this may break provisioning and add-on experiences.
+</div>
+
+<hr>
+
+<h2>Phase 1 - Build the Environment Strategy</h2>
+
+<div class="step">
+<input type="checkbox">
+<b>Create DEV Environment</b>
+
+<p>Name: Zava-Agent-DEV</p>
+
+<p>Purpose:</p>
+<ul>
+<li>Agent building</li>
+<li>Prompt engineering</li>
+<li>Connector testing</li>
+<li>Topic design</li>
+<li>Power Automate integration</li>
+</ul>
+</div>
+
+<div class="step">
+<input type="checkbox">
+<b>Create TEST Environment</b>
+
+<p>Name: Zava-Agent-UAT</p>
+
+<ul>
+<li>Solution import testing</li>
+<li>Persona validation</li>
+<li>Business acceptance testing</li>
+<li>Teams deployment testing</li>
+</ul>
+</div>
+
+<div class="step">
+<input type="checkbox">
+<b>Create PROD Environment</b>
+
+<p>Name: Zava-Agent-PROD</p>
+
+<ul>
+<li>Published agent</li>
+<li>Business consumption</li>
+<li>Teams deployment</li>
+<li>M365 Copilot deployment</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>Phase 2 - Choose a Diamond Tenant Persona</h2>
+
+<div class="step">
+
+Pick a realistic business owner:
+
+<ul>
+<li>Security Operations - Isaac Fielder</li>
+<li>Enterprise IT Architect - Lydia Bauer</li>
+<li>App Developer - Sarah Perez</li>
+<li>Chief Marketing Officer - Cecil Folk</li>
+<li>Sales - Mona Kane</li>
+<li>Factory Operations - Karin Blair</li>
+</ul>
+
+Your first agent should have a business sponsor.
+</div>
+
+<hr>
+
+<h2>Phase 3 - Create the DEV Agent</h2>
+
+<div class="step">
+<input type="checkbox">
+<b>Open Copilot Studio</b>
+
+<ul>
+<li>Switch to DEV environment</li>
+<li>Create a new agent</li>
+</ul>
+</div>
+
+<div class="step">
+<input type="checkbox">
+
+<b>Create Agent: Zava Marketing Advisor</b>
+
+Instructions:
+
+<ul>
+<li>Add description</li>
+<li>Add starter instructions</li>
+<li>Enable Generative Answers</li>
+<li>Enable Microsoft knowledge grounding</li>
+</ul>
+</div>
+
+<div class="step">
+<input type="checkbox">
+
+<b>Add Knowledge Sources</b>
+
+Use Zava content contained in Diamond Tenant:
+
+<ul>
+<li>Campaigns</li>
+<li>Campaign Messaging</li>
+<li>Brand and Design</li>
+<li>Go To Market</li>
+<li>Products</li>
+</ul>
+
+</div>
+
+<hr>
+
+<h2>Phase 4 - Add Actions</h2>
+
+<div class="step">
+<input type="checkbox">
+
+Create Power Automate flows:
+
+<ul>
+<li>Submit marketing request</li>
+<li>Create task</li>
+<li>Send approval</li>
+<li>Escalate issue</li>
+</ul>
+
+Expose each flow as an Action.
+</div>
+
+<hr>
+
+<h2>Phase 5 - Solution Packaging (Most Important Lesson)</h2>
+
+<div class="step">
+<input type="checkbox">
+
+Create Managed Solution
+
+<p>Name:</p>
+
+<code>ZavaMarketingAgentSolution</code>
+
+Include:
+
+<ul>
+<li>Agent</li>
+<li>Prompts</li>
+<li>Connector references</li>
+<li>Flows</li>
+<li>Environment variables</li>
+</ul>
+
+</div>
+
+<div class="check">
+
+✅ This is the biggest concept in the DEV → PROD blog.
+
+Never move agents manually.
+
+Move solutions.
+
+</div>
+
+<hr>
+
+<h2>Phase 6 - Deploy to TEST</h2>
+
+<div class="step">
+<input type="checkbox">
+
+Export Solution from DEV
+
+<ul>
+<li>Managed</li>
+<li>Version 1.0.0</li>
+</ul>
+
+</div>
+
+<div class="step">
+<input type="checkbox">
+
+Import into TEST Environment
+
+Validate:
+
+<ul>
+<li>Agent functions</li>
+<li>Knowledge works</li>
+<li>Flows execute</li>
+<li>Authentication works</li>
+</ul>
+
+</div>
+
+<hr>
+
+<h2>Phase 7 - Teams Publishing</h2>
+
+<div class="step">
+<input type="checkbox">
+
+From TEST:
+
+<ul>
+<li>Open Channels</li>
+<li>Microsoft Teams</li>
+<li>Publish</li>
+</ul>
+</div>
+
+<div class="step">
+<input type="checkbox">
+
+Install into Teams
+
+Validate:
+
+<ul>
+<li>Chat experience</li>
+<li>Adaptive cards</li>
+<li>Actions</li>
+<li>Permissions</li>
+</ul>
+
+</div>
+
+<hr>
+
+<h2>Phase 8 - M365 Copilot Deployment</h2>
+
+<div class="step">
+<input type="checkbox">
+
+Configure Microsoft 365 Copilot channel
+
+Validate:
+
+<ul>
+<li>Agent appears in Copilot</li>
+<li>M365 content grounding works</li>
+<li>Search experiences work</li>
+<li>Agent instructions execute correctly</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>Phase 9 - Governance</h2>
+
+<div class="step">
+<input type="checkbox">
+
+Review:
+
+<ul>
+<li>DLP Policies</li>
+<li>Copilot Policies</li>
+<li>Sensitivity Labels</li>
+<li>Purview Controls</li>
+</ul>
+</div>
+
+<p>
+The Diamond Tenant includes Purview governance,
+DLP policies,
+Copilot controls,
+Communication Compliance,
+retention labels,
+and sensitivity labels specifically for demonstrating governance and AI protection scenarios.
+</p>
+
+<hr>
+
+<h2>Phase 10 - Production Promotion</h2>
+
+<div class="step">
+<input type="checkbox">
+
+Export Solution v1.0.0 from TEST
+</div>
+
+<div class="step">
+<input type="checkbox">
+
+Import Managed Solution into PROD
+</div>
+
+<div class="step">
+<input type="checkbox">
+
+Publish to:
+<ul>
+<li>Teams</li>
+<li>Microsoft 365 Copilot</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>Capstone Challenge</h2>
+
+<p><b>Build ALL FOUR:</b></p>
+
+<ol>
+<li>HR Policy Agent</li>
+<li>Marketing Advisor Agent</li>
+<li>Sales Briefing Agent</li>
+<li>Security Triage Agent</li>
+</ol>
+
+<p>
+When you complete these four and move each through DEV→TEST→PROD using Solutions,
+you will have learned the same lifecycle used by enterprise Copilot Studio teams.
+</p>
+
+</body>
+</html>
