@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="World Cup 2026 bracket dashboard design reference for mywcbracket.">
+  <title>My World Cup Bracket · Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="mywcbracket-ui.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="My World Cup Bracket home">
+        <span class="ball-mark" aria-hidden="true">⬡</span>
+        <span>My WC Bracket <b>· 2026</b></span>
+      </a>
+      <nav class="top-actions" aria-label="Bracket actions">
+        <button class="icon-button" type="button" data-action="leaderboard" title="Open leaderboard" aria-label="Open leaderboard">♛</button>
+        <button class="button" type="button" data-action="share">Share bracket</button>
+        <button class="icon-button" type="button" data-action="backup" title="Back up pool" aria-label="Back up pool">⇩</button>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="score-hero panel">
+        <div class="hero-copy">
+          <div class="micro-row"><span class="live-dot"></span> Eric Lam · live results vs your picks <span>Last synced 16:36 PDT</span></div>
+          <h1>Backing England <span>· knocked out</span></h1>
+          <p>The final is complete. You banked 39 points from 31 picks, with no points left live.</p>
+          <div class="hero-score"><strong>39</strong><span>points<br>confirmed</span></div>
+        </div>
+        <div class="hero-kpis" aria-label="Bracket summary">
+          <article><span>Final</span><strong>0 / 1</strong><small>round complete</small></article>
+          <article><span>Max attainable</span><strong>39</strong><small>of 80 total</small></article>
+          <article class="negative"><span>Champion pick</span><strong>England</strong><small>eliminated in R16</small></article>
+          <article><span>R32 accuracy</span><strong>13 / 16</strong><small>81.3% correct</small></article>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="panel standing-panel">
+          <header class="section-head"><div><span class="section-index">01</span><h2>Your live standing</h2></div><span>6 signals</span></header>
+          <div class="standing-main">
+            <div class="rank"><span>Pool rank</span><strong>02</strong><small>of 8 brackets</small></div>
+            <div class="progress-block">
+              <div><span>Confirmed</span><b>39 / 80</b></div>
+              <div class="progress-track"><i style="--progress:48.75%"></i></div>
+              <p>41 points eliminated across Germany, Japan, Australia, USA, Colombia, France, and England branches.</p>
+            </div>
+          </div>
+          <div class="signal-strip">
+            <span><i class="correct"></i> 24 correct</span><span><i class="wrong"></i> 7 missed</span><span><i class="pending"></i> 0 live</span>
+          </div>
+        </article>
+
+        <article class="panel next-panel">
+          <header class="section-head"><div><span class="section-index">02</span><h2>Tournament status</h2></div><span>Final · FT</span></header>
+          <div class="final-score">
+            <div><span class="flag">🇫🇷</span><strong>France</strong><small>Champion</small></div>
+            <p><span>2</span><i>FT</i><span>0</span></p>
+            <div><span class="flag">🇦🇷</span><strong>Argentina</strong><small>Runner-up</small></div>
+          </div>
+          <button class="text-button" type="button" data-match="M104">Open final match facts <span>→</span></button>
+        </article>
+
+        <aside class="panel pool-panel" id="pool">
+          <header class="section-head"><div><span class="section-index">03</span><h2>Local pool</h2></div><span>8 saved</span></header>
+          <ol class="leader-list">
+            <li><b>1</b><span>Jamie K.</span><strong>44</strong></li>
+            <li class="you"><b>2</b><span>Eric Lam <small>You</small></span><strong>39</strong></li>
+            <li><b>3</b><span>Priya S.</span><strong>37</strong></li>
+            <li><b>4</b><span>Marcus T.</span><strong>33</strong></li>
+          </ol>
+          <button class="text-button" type="button" data-action="leaderboard">View all brackets <span>→</span></button>
+        </aside>
+      </section>
+
+      <section class="panel bracket-panel">
+        <header class="bracket-head">
+          <div>
+            <span class="section-index">04</span>
+            <div><h2>Knockout path</h2><p>All 31 matches · select a match for facts</p></div>
+          </div>
+          <div class="bracket-controls">
+            <div class="segmented" role="group" aria-label="Bracket path">
+              <button type="button" aria-pressed="true" data-view="actual">Actual</button>
+              <button type="button" aria-pressed="false" data-view="picks">My picks</button>
+            </div>
+            <div class="segmented filter-group" role="group" aria-label="Match filter">
+              <button type="button" aria-pressed="true" data-filter="all">All</button>
+              <button type="button" aria-pressed="false" data-filter="correct">Right</button>
+              <button type="button" aria-pressed="false" data-filter="wrong">Missed</button>
+            </div>
+          </div>
+        </header>
+        <div class="bracket-legend"><span><i class="correct"></i> Pick landed</span><span><i class="wrong"></i> Pick missed</span><span><i class="pending"></i> Future match</span><span class="privacy-note">Stored on this device only</span></div>
+        <div class="bracket-map" id="bracketMap" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <footer><span>Independent 2026 World Cup fan project</span><span>Static · zero backend · browser-owned</span></footer>
+  </div>
+
+  <dialog class="match-dialog" id="matchDialog" aria-labelledby="dialogTitle">
+    <button class="dialog-close" type="button" aria-label="Close match details">×</button>
+    <span class="dialog-kicker">Match facts · FIFA public feed</span>
+    <h2 id="dialogTitle">Final · M104</h2>
+    <div class="dialog-score"><span>🇫🇷 France</span><strong>2 — 0</strong><span>Argentina 🇦🇷</span></div>
+    <dl><div><dt>Venue</dt><dd>New York New Jersey Stadium</dd></div><div><dt>Attendance</dt><dd>80,663</dd></div><div><dt>Your pick</dt><dd>England · eliminated</dd></div><div><dt>Points</dt><dd>0 / 8</dd></div></dl>
+  </dialog>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="mywcbracket-ui.js"></script>
+</body>
+</html>

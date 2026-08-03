@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OAL for PowerPoint Templates (v2 end-state build)</title>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const saved = (() => { try { return localStorage.getItem("oalTheme"); } catch (e) { return null; } })();
+    const theme =
+      saved || param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+
+/* Dyslexia-friendly reading theme: warm low-glare cream, softer contrast,
+   looser spacing and a heavier rounded font to reduce visual stress. */
+html[data-theme="reading"] {
+  color-scheme: light;
+  --cp-bg: #f3e9d2;
+  --cp-bg-elevated: #f7f0df;
+  --cp-surface: #fbf6ea;
+  --cp-surface-soft: #efe4cb;
+  --cp-border: #d8c7a3;
+  --cp-border-strong: #b29c70;
+  --cp-text: #3a3327;
+  --cp-text-muted: #5f5642;
+  --cp-text-soft: #6f6650;
+  --cp-accent: #9a4a1f;
+  --cp-accent-hover: #823c17;
+  --cp-accent-soft: rgba(154, 74, 31, 0.10);
+  --cp-accent-fg: #fbf6ea;
+  --cp-success: #2f7d32;
+  --cp-danger: #b3261e;
+  --cp-warning: #b06d05;
+  --cp-link: #1f5d8c;
+  --cp-shadow: 0 18px 48px rgba(80, 60, 20, 0.14);
+  --cp-overlay: rgba(251, 246, 234, 0.82);
+  --cp-panel: rgba(251, 246, 234, 0.86);
+  --cp-panel-strong: rgba(251, 246, 234, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.4);
+  --cp-highlight: rgba(154, 74, 31, 0.12);
+}
+/* Reading mode: dyslexia-friendly type — Verdana/Atkinson-style, more spacing. */
+html[data-theme="reading"] body {
+  font-family: "Atkinson Hyperlegible", Verdana, "Segoe UI", Tahoma, sans-serif;
+  letter-spacing: 0.012em;
+  word-spacing: 0.06em;
+  line-height: 1.85;
+}
+html[data-theme="reading"] p,
+html[data-theme="reading"] li,
+html[data-theme="reading"] td { max-width: 68ch; }
+html[data-theme="reading"] .content { padding-top: 40px; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  max-width: 1180px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+/* ---------- Side rail ---------- */
+.rail {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  padding: 28px 18px 28px 24px;
+  border-right: 1px solid var(--cp-border);
+  background: var(--cp-bg-elevated);
+  overflow-y: auto;
+}
+.rail-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.rail-brand .dot {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--cp-accent);
+  display: grid; place-items: center;
+  color: var(--cp-accent-fg); font-weight: 700; font-size: 15px;
+  flex-shrink: 0;
+}
+.rail-brand .title { font-size: 13px; font-weight: 600; line-height: 1.25; }
+.rail-sub { font-size: 11px; color: var(--cp-text-soft); margin: 4px 0 22px 0; letter-spacing: .02em; }
+
+/* Theme toggle (dyslexia-friendly reading mode included) */
+.theme-toggle {
+  display: flex; gap: 4px; margin-bottom: 20px;
+  background: var(--cp-surface-soft);
+  border: 1px solid var(--cp-border);
+  border-radius: 999px; padding: 3px;
+}
+.theme-toggle button {
+  flex: 1; cursor: pointer;
+  font-family: inherit; font-size: 11px; font-weight: 600;
+  color: var(--cp-text-muted);
+  background: transparent; border: none; border-radius: 999px;
+  padding: 5px 4px; transition: background .15s, color .15s;
+}
+.theme-toggle button:hover { color: var(--cp-text); }
+.theme-toggle button.active {
+  background: var(--cp-accent); color: var(--cp-accent-fg);
+}
+
+.rail-progress { font-size: 11px; color: var(--cp-text-muted); margin-bottom: 14px; display:flex; justify-content:space-between; }
+.rail-progress b { color: var(--cp-accent); }
+
+.nav { position: relative; }
+.nav::before {
+  content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px;
+  width: 2px; background: var(--cp-border);
+}
+.nav a {
+  position: relative;
+  display: flex; align-items: center; gap: 12px;
+  padding: 7px 0 7px 26px;
+  font-size: 13px; color: var(--cp-text-muted);
+  text-decoration: none;
+  transition: color .15s;
+}
+.nav a .node {
+  position: absolute; left: 2px; top: 50%; transform: translateY(-50%);
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--cp-surface);
+  border: 2px solid var(--cp-border-strong);
+  transition: all .15s;
+}
+.nav a:hover { color: var(--cp-text); }
+.nav a.active { color: var(--cp-accent); font-weight: 600; }
+.nav a.active .node {
+  background: var(--cp-accent); border-color: var(--cp-accent);
+  box-shadow: 0 0 0 4px var(--cp-accent-soft);
+}
+.nav a .lbl-num { color: var(--cp-text-soft); font-variant-numeric: tabular-nums; font-size: 11px; }
+.nav a.active .lbl-num { color: var(--cp-accent); }
+
+/* ---------- Content ---------- */
+.content { padding: 48px 56px 120px 56px; min-width: 0; }
+
+.hero { margin-bottom: 40px; }
+.hero .eyebrow {
+  display: inline-block; font-size: 12px; font-weight: 600;
+  color: var(--cp-accent); text-transform: uppercase; letter-spacing: .08em;
+  margin-bottom: 12px;
+}
+.hero h1 { font-size: 32px; line-height: 1.2; font-weight: 700; margin-bottom: 14px; }
+.hero p { font-size: 16px; color: var(--cp-text-muted); max-width: 70ch; }
+.hero .meta {
+  margin-top: 18px; font-size: 12px; color: var(--cp-text-soft);
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.hero .meta a { color: var(--cp-link); text-decoration: none; }
+.hero .meta a:hover { text-decoration: underline; }
+
+/* Personalize bar — live-fills tenant/site/library into every URL & command */
+.personalize {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-left: 3px solid var(--cp-accent);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-top: 26px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
+}
+.personalize h3 {
+  font-size: 14px; font-weight: 700; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.personalize h3 .tag {
+  font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px;
+  background: var(--cp-accent-soft); color: var(--cp-accent);
+}
+.personalize p.hint { font-size: 12px; color: var(--cp-text-muted); margin-bottom: 14px; }
+.pfields { display: flex; gap: 14px; flex-wrap: wrap; }
+.pfield { display: flex; flex-direction: column; gap: 4px; flex: 1 1 180px; min-width: 150px; }
+.pfield label {
+  font-size: 11px; font-weight: 600; color: var(--cp-text-soft);
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.pfield .with-suffix { position: relative; display: flex; align-items: center; }
+.pfield input {
+  width: 100%;
+  font-family: Consolas, "Courier New", Courier, monospace;
+  font-size: 13px;
+  color: var(--cp-text);
+  background: var(--cp-surface-soft);
+  border: 1px solid var(--cp-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.pfield input:focus {
+  outline: none;
+  border-color: var(--cp-accent);
+  box-shadow: 0 0 0 3px var(--cp-accent-soft);
+}
+.pfield .suffix { font-size: 11px; color: var(--cp-text-soft); margin-top: 3px; font-family: Consolas, monospace; }
+.preset-row { margin-top: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.preset-row button {
+  font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+  background: var(--cp-surface-soft); color: var(--cp-text-muted);
+  border: 1px solid var(--cp-border); border-radius: 8px; padding: 6px 12px;
+}
+.preset-row button:hover { color: var(--cp-accent); border-color: var(--cp-accent); }
+.preset-row .saved-note { font-size: 11px; color: var(--cp-success); opacity: 0; transition: opacity .2s; }
+.preset-row .saved-note.show { opacity: 1; }
+/* tokens that get live-replaced */
+.v-tenant, .v-site, .v-lib { font-style: normal; }
+
+section { scroll-margin-top: 24px; padding-top: 40px; }
+section > h2 {
+  font-size: 22px; font-weight: 700; margin-bottom: 6px;
+  display: flex; align-items: baseline; gap: 12px;
+}
+section > h2 .snum {
+  font-size: 13px; color: var(--cp-accent); font-weight: 700;
+  background: var(--cp-accent-soft); padding: 2px 9px; border-radius: 999px;
+}
+section > .lede { color: var(--cp-text-muted); margin-bottom: 18px; max-width: 72ch; }
+
+.card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
+  margin-bottom: 16px;
+}
+
+p { margin-bottom: 12px; }
+.content a { color: var(--cp-link); text-decoration: none; }
+.content a:hover { text-decoration: underline; }
+
+ul.clean, ol.steps { margin: 4px 0 4px 0; padding-left: 0; list-style: none; }
+ul.clean li { position: relative; padding-left: 22px; margin-bottom: 10px; }
+ul.clean li::before {
+  content: ""; position: absolute; left: 4px; top: 9px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--cp-accent);
+}
+ol.steps { counter-reset: s; }
+ol.steps > li {
+  position: relative; padding-left: 40px; margin-bottom: 16px; counter-increment: s;
+}
+ol.steps > li::before {
+  content: counter(s); position: absolute; left: 0; top: -2px;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--cp-accent); color: var(--cp-accent-fg);
+  font-size: 13px; font-weight: 700; display: grid; place-items: center;
+}
+ol.steps > li > strong:first-child { display:block; margin-bottom: 2px; }
+
+code.inline {
+  font-family: Consolas, "Courier New", Courier, monospace;
+  background: var(--cp-surface-soft);
+  border: 1px solid var(--cp-border);
+  border-radius: 6px; padding: 1px 6px; font-size: 13px;
+  color: var(--cp-accent);
+}
+
+.codeblock {
+  position: relative;
+  background: var(--cp-surface-soft);
+  border: 1px solid var(--cp-border);
+  border-radius: 10px;
+  padding: 16px 18px; margin: 14px 0;
+  font-family: Consolas, "Courier New", Courier, monospace;
+  font-size: 13px; line-height: 1.6;
+  overflow-x: auto; white-space: pre;
+  color: var(--cp-text);
+}
+.codeblock .cm { color: var(--cp-text-soft); }
+.codeblock .pm { color: var(--cp-accent); }
+.copybtn {
+  position: absolute; top: 10px; right: 10px;
+  background: var(--cp-surface); border: 1px solid var(--cp-border);
+  color: var(--cp-text-muted); font-size: 11px; font-weight: 600;
+  padding: 4px 10px; border-radius: 6px; cursor: pointer;
+  font-family: "Segoe UI", sans-serif;
+}
+.copybtn:hover { color: var(--cp-accent); border-color: var(--cp-accent); }
+
+.callout {
+  border-left: 3px solid var(--cp-accent);
+  background: var(--cp-accent-soft);
+  border-radius: 0 10px 10px 0;
+  padding: 12px 16px; margin: 14px 0; font-size: 14px;
+}
+.callout.warn { border-left-color: var(--cp-warning); background: rgba(245,158,11,.08); }
+.callout .ct { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; display:block; margin-bottom: 3px; }
+.callout.warn .ct { color: var(--cp-warning); }
+.callout:not(.warn) .ct { color: var(--cp-accent); }
+
+table.req { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 14px; }
+table.req th, table.req td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--cp-border); vertical-align: top; }
+table.req th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--cp-text-soft); }
+table.req td:first-child { font-weight: 600; white-space: nowrap; }
+
+.pillrow { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 2px; }
+.pill {
+  font-size: 12px; padding: 4px 11px; border-radius: 999px;
+  background: var(--cp-surface-soft); border: 1px solid var(--cp-border);
+  color: var(--cp-text-muted);
+}
+.pill b { color: var(--cp-accent); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.split .card { margin-bottom: 0; }
+.split h3 { font-size: 15px; margin-bottom: 8px; display:flex; align-items:center; gap:8px; }
+.split h3 .tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; background: var(--cp-accent-soft); color: var(--cp-accent); }
+
+.footer-note { margin-top: 40px; font-size: 12px; color: var(--cp-text-soft); border-top: 1px solid var(--cp-border); padding-top: 18px; }
+
+@media (max-width: 760px) {
+  .layout { grid-template-columns: 1fr; }
+  .rail {
+    position: sticky; top: 0; height: auto; z-index: 50;
+    padding: 12px 16px;
+    border-right: none; border-bottom: 1px solid var(--cp-border);
+    background: var(--cp-panel-strong);
+    backdrop-filter: blur(8px);
+  }
+  .rail-brand { margin-bottom: 0; }
+  .rail-brand .title { font-size: 12px; }
+  .rail-sub, .rail-progress { display: none; }
+  .nav {
+    display: flex; flex-direction: row; gap: 4px;
+    overflow-x: auto; margin-top: 10px;
+    scrollbar-width: thin; -webkit-overflow-scrolling: touch;
+  }
+  .nav::before { display: none; }
+  .nav a {
+    flex: 0 0 auto;
+    padding: 6px 12px 6px 12px;
+    border: 1px solid var(--cp-border); border-radius: 999px;
+    white-space: nowrap; gap: 6px;
+    background: var(--cp-surface);
+  }
+  .nav a .node { display: none; }
+  .nav a.active { background: var(--cp-accent-soft); border-color: var(--cp-accent); }
+  .content { padding: 28px 20px 80px; }
+  .split { grid-template-columns: 1fr; }
+}
+</style>
+<link rel="stylesheet" href="design-system.css" />
+</head>
+<body>
+<div class="layout">
+  <!-- SIDE RAIL -->
+  <aside class="rail">
+    <div class="rail-brand">
+      <div class="dot">P</div>
+      <div class="title">Org Asset Library<br>PowerPoint Templates</div>
+    </div>
+    <div class="rail-sub">SharePoint admin setup guide</div>
+    <div class="theme-toggle" id="themeToggle" role="group" aria-label="Color theme">
+      <button data-theme-val="light" aria-label="Light theme">Light</button>
+      <button data-theme-val="dark" aria-label="Dark theme">Dark</button>
+      <button data-theme-val="reading" aria-label="Reading theme, dyslexia friendly" title="Dyslexia-friendly: warm low-glare background, readable font, extra spacing">Reading</button>
+    </div>
+    <div class="rail-progress"><span>Progress</span><span><b id="pct">0%</b></span></div>
+    <nav class="nav" id="nav">
+      <a href="#personalize"><span class="node"></span><span class="lbl-num">&#9881;</span> Personalize</a>
+      <a href="#overview"><span class="node"></span><span class="lbl-num">00</span> Overview</a>
+      <a href="#prereqs"><span class="node"></span><span class="lbl-num">01</span> Prerequisites</a>
+      <a href="#site"><span class="node"></span><span class="lbl-num">02</span> Build the SharePoint site</a>
+      <a href="#templates"><span class="node"></span><span class="lbl-num">03</span> Build, save &amp; upload</a>
+      <a href="#shell"><span class="node"></span><span class="lbl-num">04</span> Install Shell</a>
+      <a href="#connect"><span class="node"></span><span class="lbl-num">05</span> Connect</a>
+      <a href="#register"><span class="node"></span><span class="lbl-num">06</span> Register library</a>
+      <a href="#access"><span class="node"></span><span class="lbl-num">07</span> How users access</a>
+      <a href="#manage"><span class="node"></span><span class="lbl-num">08</span> Manage &amp; update</a>
+      <a href="#gotchas"><span class="node"></span><span class="lbl-num">09</span> Gotchas</a>
+    </nav>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+    <div class="hero">
+      <span class="eyebrow">SharePoint in Microsoft 365</span>
+      <h1>Set up an Organization Asset Library for PowerPoint templates</h1>
+      <p>Designate a SharePoint document library as an <strong>organization assets library (OAL)</strong> of type
+      <code class="inline">OfficeTemplateLibrary</code> so your corporate <code class="inline">.potx</code> templates
+      appear under your organization's tab when people create a new PowerPoint file.</p>
+      <div class="meta">
+        <span>Audience: SharePoint Administrator (or higher)</span>
+        <span>Source: <a href="https://learn.microsoft.com/en-us/sharepoint/organization-assets-library" target="_blank" rel="noopener">Microsoft Learn, Create an organization assets library</a></span>
+      </div>
+      <p style="margin-top:10px;font-size:12px;color:var(--cp-text-soft)">Built and grounded on official Microsoft documentation. Unofficial community resource, not affiliated with Microsoft.</p>
+    </div>
+
+    <div class="card" style="border-left:3px solid var(--cp-accent);">
+      <h3 style="font-size:15px;margin-bottom:8px">What you get at the end</h3>
+      <p style="color:var(--cp-text-muted);margin-bottom:12px">A user opens PowerPoint, clicks <code class="inline">File &rarr; New</code>, and your branded templates sit in a tab named after your organization. They pick one and start an on-brand deck. Same experience for every user, on desktop and web.</p>
+      <div style="background:var(--cp-surface-soft);border:1px solid var(--cp-border);border-radius:10px;padding:14px 16px;font-family:Consolas,'Courier New',monospace;font-size:13px;color:var(--cp-text-muted);line-height:1.9">
+        PowerPoint &nbsp;&rarr;&nbsp; File &nbsp;&rarr;&nbsp; New<br>
+        <span style="color:var(--cp-accent);font-weight:700">[ Your organization ]</span> &nbsp; Personal &nbsp; Featured<br>
+        &nbsp;&nbsp;&#9634;&nbsp; Brand Template.potx
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:10px">The shortest path to that</h3>
+      <ol class="steps">
+        <li><strong>Build the site and library.</strong> One SharePoint site, one document library. (§02)</li>
+        <li><strong>Grant Read to "Everyone except external users".</strong> The step most people miss. (§02 C)</li>
+        <li><strong>Upload .potx templates.</strong> Not .pptx. (§03)</li>
+        <li><strong>Promote the library.</strong> One PowerShell command. (§06)</li>
+        <li><strong>Users open the gallery.</strong> File &rarr; New &rarr; Organization Templates. (§07)</li>
+      </ol>
+    </div>
+
+    <div class="callout">
+      <span class="ct">What you will not find in the official docs</span>
+      The read grant goes on the document <strong>library</strong>, not the site. The path is <code class="inline">Settings &rarr; Site permissions &rarr; Share site</code>, set to <strong>Read</strong>. Templates must be <strong>.potx</strong>, not .pptx. Copilot searchable does not work on a template library.
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:10px">Why this guide exists</h3>
+      <p style="color:var(--cp-text-muted);margin-bottom:12px">You want every user in your organization to start new PowerPoint decks from approved, on-brand templates across the tenant. Users upload personal templates, but those templates stay private and never appear for other people. Some users see no organization templates option in PowerPoint. You need one supported way to push templates to everyone and show them the same way for each user.</p>
+      <p style="color:var(--cp-text-muted);margin:0">Two features handle branding, and they work in parallel:</p>
+    </div>
+    <div class="split" style="margin-bottom:16px">
+      <div class="card">
+        <h3>Organization Asset Library (OAL) <span class="tag">this guide</span></h3>
+        <p style="margin:0;color:var(--cp-text-muted)">Powers the native template gallery at <code class="inline">File &rarr; New &rarr; Organization Templates</code> in PowerPoint on desktop and web. Publishes org-level templates that every user sees, and adds the branded <strong>slide layouts</strong> they start from.</p>
+      </div>
+      <div class="card">
+        <h3>Brand Kit Templates</h3>
+        <p style="margin:0;color:var(--cp-text-muted)">Set up in <code class="inline">Copilot &rarr; Create &rarr; More &rarr; Brand kits</code>. A brand manager publishes a kit to <strong>Official</strong> for org-wide access. A Brand Kit applies your brand <strong>theme</strong>, colors, fonts, and logos, to Copilot-generated and suggested designs. It does not surface <code class="inline">.potx</code> templates in the <code class="inline">File &rarr; New</code> gallery. That is the OAL's job.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="ct">Bottom line</span>
+      Brand Kits apply the <strong>theme</strong>. OAL adds the <strong>template layout</strong>. They run in parallel. For the <code class="inline">File &rarr; New</code> template gallery, you want the <strong>OAL</strong>. This guide sets up the OAL.
+    </div>
+
+    <div class="personalize" id="personalize" style="scroll-margin-top:24px">
+      <h3>Personalize this guide <span class="tag">live</span></h3>
+      <p class="hint">Type your values once. Every URL and command below updates instantly.</p>
+      <div class="pfields">
+        <div class="pfield">
+          <label for="inp-tenant">Tenant</label>
+          <input id="inp-tenant" type="text" spellcheck="false" autocapitalize="off" placeholder="contoso" />
+          <span class="suffix"><span class="v-tenant">contoso</span>.sharepoint.com</span>
+        </div>
+        <div class="pfield">
+          <label for="inp-site">Site path</label>
+          <input id="inp-site" type="text" spellcheck="false" autocapitalize="off" placeholder="branding" />
+          <span class="suffix">/sites/<span class="v-site">branding</span></span>
+        </div>
+        <div class="pfield">
+          <label for="inp-lib">Library name</label>
+          <input id="inp-lib" type="text" spellcheck="false" autocapitalize="off" placeholder="Templates" />
+          <span class="suffix">/<span class="v-lib">Templates</span></span>
+        </div>
+      </div>
+      <div class="preset-row">
+        <button type="button" id="resetPersonalize">Reset to example</button>
+        <span class="saved-note" id="savedNote">Saved &#10003;</span>
+      </div>
+    </div>
+
+    <!-- 00 -->
+    <section id="overview">
+      <h2><span class="snum">00</span> Overview</h2>
+      <p class="lede">An organization assets library is a SharePoint document library you promote so its files surface across Microsoft 365. It holds different asset types. For branded decks you want the <strong>Office templates</strong> type. This guide covers the Office templates type.</p>
+      <div class="split">
+        <div class="card">
+          <h3>Office templates <span class="tag">this guide</span></h3>
+          <p style="margin:0;color:var(--cp-text-muted)">When a user creates a new Office document, they see a tab for your organization with the available templates. Works in Word, Excel, and PowerPoint.</p>
+        </div>
+        <div class="card">
+          <h3>Images &amp; logos</h3>
+          <p style="margin:0;color:var(--cp-text-muted)">Photos and logos appear under "Your organization" in the SharePoint file picker and "Brand Images" in PowerPoint. This is a separate setup. This guide does not cover it.</p>
+        </div>
+      </div>
+      <div class="callout">
+        <span class="ct">Key parameter</span>
+        For templates, register the library with <code class="inline">-OrgAssetType OfficeTemplateLibrary</code>. If you omit the type, it defaults to an image library. An image library does not surface templates.
+      </div>
+    </section>
+
+    <!-- 01 -->
+    <section id="prereqs">
+      <h2><span class="snum">01</span> Prerequisites</h2>
+      <p class="lede">Confirm licensing, app versions, and roles before you start. Each item below blocks a rollout if you miss it.</p>
+      <div class="card">
+        <table class="req">
+          <tr><th>Requirement</th><th>Detail</th></tr>
+          <tr><td>Admin role</td><td>SharePoint Administrator or higher in Microsoft 365.</td></tr>
+          <tr><td>Desktop apps</td><td>Microsoft 365 Apps <strong>Version 2002 or later</strong> (Word, Excel, PowerPoint).</td></tr>
+          <tr><td>PowerPoint on the web</td><td>User must be assigned an <strong>Office 365 E3 or E5</strong> license. (OAL is not available in Word or Excel on the web.)</td></tr>
+          <tr><td>End-user permission</td><td>At least <strong>read</strong> permission on your organization's root site.</td></tr>
+          <tr><td>Management Shell</td><td>Latest SharePoint Online Management Shell installed.</td></tr>
+          <tr><td>File format</td><td>PowerPoint templates must be saved as <code class="inline">.potx</code> (Word <code class="inline">.dotx</code>, Excel <code class="inline">.xltx</code>).</td></tr>
+        </table>
+      </div>
+      <div class="callout warn">
+        <span class="ct">Not available on</span>
+        Office 365 operated by 21Vianet (China) or Microsoft 365 US Government plans.
+      </div>
+      <div class="pillrow">
+        <span class="pill">Limit: <b>up to 30</b> libraries per org</span>
+        <span class="pill">All libraries must be on the <b>same site</b></span>
+        <span class="pill">Libraries only, <b>not folders</b></span>
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section id="site">
+      <h2><span class="snum">02</span> Build the SharePoint site from scratch</h2>
+      <p class="lede">An organization assets library starts as an ordinary SharePoint document library. You promote it with PowerShell later. First you build a site and library. Then you turn it into an OAL. You do <strong>not</strong> need Brand Central. <a href="https://learn.microsoft.com/en-us/sharepoint/organization-assets-library" target="_blank" rel="noopener">Source: Create an organization assets library</a>.</p>
+
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:10px">A. Create a new site</h3>
+        <ol class="steps">
+          <li><strong>Open the create flow.</strong> Go to <code class="inline">https://<span class="v-tenant">contoso</span>.sharepoint.com</code> and click <strong>+ Create site</strong> on the SharePoint start page. Admins also use SharePoint admin center &rarr; <strong>Active sites</strong> &rarr; <strong>+ Create</strong>.</li>
+          <li><strong>Choose a site type.</strong> Pick <strong>Communication site</strong>. Any modern site works, including communication, a Microsoft 365 Group team site, or a non-group team site. A communication site fits the "few publishers, everyone reads" pattern and does not create a Group you do not need.</li>
+          <li><strong>Pick a design (optional).</strong> The <em>Topic</em> or <em>Blank</em> template works. The site design has no effect on OAL behavior. It only styles the landing page.</li>
+          <li><strong>Name and address it.</strong> Use a site name like <em>Brand Templates</em>. The <strong>site address</strong> becomes the URL path, for example <code class="inline">/sites/<span class="v-site">branding</span></code> &rarr; <code class="inline">https://<span class="v-tenant">contoso</span>.sharepoint.com/sites/<span class="v-site">branding</span></code>. Note this URL. You build on it.</li>
+          <li><strong>Set language and owner.</strong> Choose the default language. The default language is permanent. Set yourself as <strong>primary administrator</strong>, then <strong>Finish</strong>. The site provisions in a few seconds.</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:10px">B. Create the document library</h3>
+        <ol class="steps">
+          <li><strong>Add a library.</strong> On the new site, click <strong>+ New</strong> &rarr; <strong>Document library</strong> &rarr; <strong>Blank library</strong>.</li>
+          <li><strong>Name it.</strong> Use a name like <code class="inline"><span class="v-lib">Templates</span></code> and an optional description. Click <strong>Create</strong>. Its URL becomes <code class="inline">https://<span class="v-tenant">contoso</span>.sharepoint.com/sites/<span class="v-site">branding</span>/<span class="v-lib">Templates</span></code>. You register this library URL in §06.</li>
+          <li><strong>It must be a library, not a folder.</strong> The OAL designation accepts document <em>libraries</em> only. For sub-groupings, use folders inside this one library. Register each library separately if you create more than one.</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:10px">C. Set permissions correctly</h3>
+        <ol class="steps">
+          <li><strong>Publishers = Members or Owners.</strong> <code class="inline">&#9881; Settings &rarr; Site permissions</code>. Add the people who upload and maintain templates as <strong>Members</strong> (edit) or <strong>Owners</strong> (full control).</li>
+          <li><strong>Readers = "Everyone except external users" (REQUIRED).</strong> This group must have <strong>Read</strong> on the library before you register. Missing this grant is the top reason <code class="inline">Add-SPOOrgAssetsLibrary</code> fails. See the error callout below. <strong>Exact path:</strong> on the <code class="inline"><span class="v-lib">Templates</span></code> site, click <code class="inline">&#9881; Settings &rarr; Site permissions &rarr; Share site</code>, add <em>"Everyone except external users"</em>, and set the permission level to <strong>Read</strong>, not Edit. Then save.</li>
+          <li><strong>Fine-tune if needed.</strong> You customize permissions on up to <strong>100</strong> files or folders in the library, for example to hold back a draft template, without breaking the OAL.</li>
+        </ol>
+      </div>
+
+      <div class="callout warn" style="border-left-width:5px;">
+        <span class="ct">If you hit this error</span>
+        <code class="inline" style="white-space:normal;display:block;margin:6px 0;">Add-SPOOrgAssetsLibrary : "Everyone except external users" needs to be given read permission to the document library.</code>
+        The read grant is missing. Fix: on the <code class="inline"><span class="v-lib">Templates</span></code> site go to <code class="inline">&#9881; Settings &rarr; Site permissions &rarr; Share site</code>, add <em>"Everyone except external users"</em> set to <strong>Read</strong>, then re-run the §06 command. <a href="https://aka.ms/orgassets" target="_blank" rel="noopener">aka.ms/orgassets</a>.
+      </div>
+
+      <div class="callout">
+        <span class="ct">Site vs. OAL</span>
+        This site and library are not an organization assets library yet. Right now it is a normal SharePoint library. You apply the OAL designation later with <code class="inline">Add-SPOOrgAssetsLibrary</code> in §06. The designation surfaces the templates under your org tab in PowerPoint and enables a delivery CDN. §03 fills the library. §04 through §06 perform the promotion.
+      </div>
+      <div class="pillrow">
+        <span class="pill"><b>Up to 30</b> OAL libraries per org</span>
+        <span class="pill">All OAL libraries on the <b>same site</b></span>
+        <span class="pill">Designate <b>libraries</b>, not folders</span>
+      </div>
+    </section>
+
+    <!-- 03 -->
+    <section id="templates">
+      <h2><span class="snum">03</span> Build, save &amp; upload your .potx templates</h2>
+      <div class="callout warn" style="border-left-width:5px;font-size:15px;display:flex;align-items:center;gap:14px;">
+        <span style="font-size:26px;line-height:1;flex-shrink:0;">&#9888;</span>
+        <span><span class="ct" style="font-size:13px;">The file MUST be a .potx</span>
+        The Organization Asset Library supports PowerPoint templates in <code class="inline">.potx</code> format. A standard <code class="inline">.pptx</code> presentation is not a supported organizational template format and won't appear in the PowerPoint organizational templates experience. Always save and upload PowerPoint templates as <code class="inline">.potx</code>. <a href="https://learn.microsoft.com/en-us/sharepoint/organization-assets-library#:~:text=Uploaded%20template%20files%20must%20be%20in%20the%20following%20formats:" target="_blank" rel="noopener">Source: supported template formats</a>.</span>
+      </div>
+      <p class="lede">A template is a deck whose <strong>slide master and layouts</strong> carry your branding. Save it in the <code class="inline">.potx</code> format, the only PowerPoint format the OAL accepts. Then upload it to your library. <a href="https://support.microsoft.com/en-US/PowerPoint/create-and-save-a-powerpoint-template" target="_blank" rel="noopener">Source: Create and save a PowerPoint template</a>.</p>
+      <div class="callout">
+        <span class="ct">Already have a template</span>
+        If you have a finished <code class="inline">.potx</code>, upload it in card&nbsp;C. No rebuild needed. If you have a polished <code class="inline">.pptx</code>, open it and run <code class="inline">File &rarr; Save As &rarr; PowerPoint Template (*.potx)</code> once in card&nbsp;B, then upload. Card&nbsp;A covers building a new template from scratch.
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:10px">A. Build the template <span style="font-weight:400;color:var(--cp-text-soft);font-size:12px">(new templates only)</span></h3>
+        <ol class="steps">
+          <li><strong>Start a blank deck.</strong> <code class="inline">File &rarr; New &rarr; Blank Presentation</code>.</li>
+          <li><strong>Edit the slide master.</strong> Go to <code class="inline">View &rarr; Slide Master</code>, then apply your brand with <strong>Themes</strong>, <strong>Background Styles</strong>, and <strong>Insert Placeholder</strong> on the master and its layouts. Editing the master and layouts makes it a reusable template.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:10px">B. Save as .potx</h3>
+        <ol class="steps">
+          <li><strong>Save As.</strong> <code class="inline">File &rarr; Save As</code> (or <strong>Save a Copy</strong> in Microsoft 365).</li>
+          <li><strong>Choose the template type.</strong> In the <em>Save as type</em> list, select <strong>PowerPoint Template</strong>. PowerPoint switches the location to your <em>Custom Office Templates</em> folder. Name it and <strong>Save</strong>.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:10px">C. Upload to the library</h3>
+        <ol class="steps">
+          <li><strong>Upload the .potx.</strong> Put the <code class="inline">.potx</code> files into the <code class="inline"><span class="v-lib">Templates</span></code> library from §02. Check the extension reads <code class="inline">.potx</code>, not <code class="inline">.pptx</code>, before you register. You register this library next.</li>
+          <li><strong>(Optional) Add a thumbnail image.</strong> For a custom card background in the file picker, place an image, for example your logo, on the same site and note its URL for §06.</li>
+        </ol>
+      </div>
+      <div class="callout">
+        <span class="ct">Tip</span>
+        Keep the library tidy. Only template files belong here. The public name of the library is your organization name.
+      </div>
+    </section>
+
+    <!-- 04 -->
+    <section id="shell">
+      <h2><span class="snum">04</span> Install the SharePoint Online Management Shell</h2>
+      <p class="lede">You register in PowerShell. Use a clean, current install.</p>
+      <div class="card">
+        <ol class="steps">
+          <li><strong>Uninstall any old version.</strong> If a previous SharePoint Online Management Shell is installed, remove it via <em>Add or remove programs</em> first.</li>
+          <li><strong>Download the latest.</strong> Get it from the <a href="https://go.microsoft.com/fwlink/p/?LinkId=255251" target="_blank" rel="noopener">official download link</a> and install.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 05 -->
+    <section id="connect">
+      <h2><span class="snum">05</span> Connect to SharePoint</h2>
+      <p class="lede">Authenticate as a SharePoint Administrator. Replace the URL with your own tenant admin endpoint.</p>
+      <p style="font-size:13px;color:var(--cp-text-soft);margin-bottom:4px">Connect to your SharePoint admin center:</p>
+      <div class="codeblock"><button class="copybtn" onclick="copyCode(this)">Copy</button>Connect-SPOService -Url https://<span class="pm v-tenant">contoso</span>-admin.sharepoint.com</div>
+      <p style="font-size:13px;color:var(--cp-text-soft)">See <a href="https://learn.microsoft.com/en-us/powershell/sharepoint/sharepoint-online/connect-sharepoint-online" target="_blank" rel="noopener">Getting started with the SharePoint Online Management Shell</a> for sign-in details.</p>
+    </section>
+
+    <!-- 06 -->
+    <section id="register">
+      <h2><span class="snum">06</span> Register the library as a template OAL</h2>
+      <p class="lede">This step turns the library from §02 into an organization assets library. Run <code class="inline">Add-SPOOrgAssetsLibrary</code> with the template type. It promotes the library, enables a delivery CDN, and surfaces your templates under the org tab in PowerPoint.</p>
+
+      <div class="callout warn" style="border-left-width:5px;">
+        <span class="ct">Permission check before you run this</span>
+        The command fails unless <em>"Everyone except external users"</em> already has <strong>Read</strong> on the <code class="inline"><span class="v-lib">Templates</span></code> <strong>document library</strong> from §02 step C2. Confirm this first, or you get: <em>"Everyone except external users" needs to be given read permission to the document library.</em>
+      </div>
+
+      <p style="font-size:13px;color:var(--cp-text-soft);margin-bottom:4px">Syntax:</p>
+      <div class="codeblock"><button class="copybtn" onclick="copyCode(this)">Copy</button>Add-SPOOrgAssetsLibrary -LibraryUrl &lt;URL&gt; [-ThumbnailUrl &lt;URL&gt;] [-OrgAssetType OfficeTemplateLibrary] [-CdnType &lt;Private or Public&gt;]</div>
+
+      <p style="font-size:13px;color:var(--cp-text-soft);margin:14px 0 4px">Example, register a PowerPoint template library:</p>
+      <div class="codeblock"><button class="copybtn" onclick="copyCode(this)">Copy</button>Add-SPOOrgAssetsLibrary <span class="cm">`</span>
+  -LibraryUrl https://<span class="pm v-tenant">contoso</span>.sharepoint.com/sites/<span class="pm v-site">branding</span>/<span class="pm v-lib">Templates</span> <span class="cm">`</span>
+  -ThumbnailUrl https://<span class="pm v-tenant">contoso</span>.sharepoint.com/sites/<span class="pm v-site">branding</span>/<span class="pm v-lib">Templates</span>/logo.png <span class="cm">`</span>
+  -OrgAssetType <span class="pm">OfficeTemplateLibrary</span></div>
+
+      <div class="card" style="margin-top:16px">
+        <table class="req">
+          <tr><th>Parameter</th><th>What it does</th></tr>
+          <tr><td>-LibraryUrl</td><td>Absolute URL of the document library holding your <code class="inline">.potx</code> files.</td></tr>
+          <tr><td>-ThumbnailUrl</td><td>Optional. Image shown as the card background in the file picker. Must be on the same site. The card's display name is your org name.</td></tr>
+          <tr><td>-OrgAssetType</td><td><strong>OfficeTemplateLibrary</strong> for templates. (Omitting it defaults to an image library.)</td></tr>
+          <tr><td>-CdnType</td><td>Optional. This sets the CDN <em>type</em>, Public or Private, and only if you pass it. You do not need it for templates. The CDN itself is enabled at the confirm prompt, not here. See the CDN note below. The <em>private</em> type is being deprecated, so pass <code class="inline">Public</code> only if you need a public CDN.</td></tr>
+        </table>
+      </div>
+      <div class="callout">
+        <span class="ct">Note - CDN</span>
+        Adding an organization assets library will enable a <strong>content delivery network (CDN)</strong> for your organization to provide fast and reliable performance for shared assets. You'll be <strong>prompted to enable a CDN for each</strong> organization asset library you add. For more information, see <a href="https://learn.microsoft.com/en-us/office365/enterprise/content-delivery-networks" target="_blank" rel="noopener">Content Delivery Networks (CDNs)</a>.
+        <br><br>At the confirm prompt, type <strong>Y</strong> to enable it. Y is the default and the recommended choice. It caches your shared template assets closer to users for faster downloads. The Office 365 CDN is included in your SharePoint Online subscription.
+      </div>
+    </section>
+
+    <!-- 07 -->
+    <section id="access">
+      <h2><span class="snum">07</span> How users find the templates</h2>
+      <p class="lede">In PowerPoint, users open your organization's templates folder and pick a deck. The exact path differs by platform. Users need an <strong>Office 365 E3 or E5</strong> license. <a href="https://support.microsoft.com/en-US/PowerPoint/use-your-organization-s-templates-in-powerpoint" target="_blank" rel="noopener">Source: Use your organization's templates in PowerPoint</a>.</p>
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:8px">PowerPoint for Windows</h3>
+        <ul class="clean">
+          <li>Select <strong>New</strong> on launch, or <code class="inline">File &rarr; New</code>.</li>
+          <li>Open the folder with <strong>your organization's name</strong> on it.</li>
+          <li><strong>Right-click</strong> the template &rarr; <strong>Create</strong>.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:8px">PowerPoint for Mac</h3>
+        <ul class="clean">
+          <li>Select <strong>New</strong> on launch, or <code class="inline">File &rarr; New from template</code>.</li>
+          <li>Open the folder with your organization's name on it.</li>
+          <li><strong>Double-click</strong> the template to create a presentation.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:8px">PowerPoint for the web <span class="tag">E3 / E5</span></h3>
+        <ul class="clean">
+          <li>Go to <strong>Office.com</strong> &rarr; select the <strong>PowerPoint</strong> icon.</li>
+          <li>On the <strong>File</strong> tab: <code class="inline">New &rarr; Browse templates</code>.</li>
+          <li>On the left, select your <strong>company name</strong>, then pick the template.</li>
+        </ul>
+      </div>
+      <div class="callout warn">
+        <span class="ct">Propagation</span>
+        Allow up to <strong>24 hours</strong> for the library to appear to users in the desktop apps. Organization fonts are also supported in PowerPoint for the web.
+      </div>
+      <div class="callout">
+        <span class="ct">Bonus</span>
+        Templates supported by <strong>Design Suggestions</strong> give users on-brand, coherent slide layouts automatically (<code class="inline">Home &rarr; Design Suggestions</code>).
+      </div>
+    </section>
+
+    <!-- 08 -->
+    <section id="manage">
+      <h2><span class="snum">08</span> Manage &amp; update</h2>
+      <p class="lede">Inspect, re-thumbnail, or remove libraries with the companion cmdlets. Run one at a time.</p>
+      <p style="font-size:13px;color:var(--cp-text-soft);margin-bottom:4px">List all organization asset libraries on the site:</p>
+      <div class="codeblock"><button class="copybtn" onclick="copyCode(this)">Copy</button>Get-SPOOrgAssetsLibrary</div>
+      <p style="font-size:13px;color:var(--cp-text-soft);margin:14px 0 4px">Update the thumbnail for a library:</p>
+      <div class="codeblock"><button class="copybtn" onclick="copyCode(this)">Copy</button>Set-SPOOrgAssetsLibrary -LibraryUrl https://<span class="pm v-tenant">contoso</span>.sharepoint.com/sites/<span class="pm v-site">branding</span>/<span class="pm v-lib">Templates</span> -ThumbnailUrl https://<span class="pm v-tenant">contoso</span>.sharepoint.com/sites/<span class="pm v-site">branding</span>/<span class="pm v-lib">Templates</span>/logo.png</div>
+      <p style="font-size:13px;color:var(--cp-text-soft);margin:14px 0 4px">Remove a library from the OAL designation:</p>
+      <div class="codeblock"><button class="copybtn" onclick="copyCode(this)">Copy</button>Remove-SPOOrgAssetsLibrary -LibraryUrl https://<span class="pm v-tenant">contoso</span>.sharepoint.com/sites/<span class="pm v-site">branding</span>/<span class="pm v-lib">Templates</span></div>
+    </section>
+
+    <!-- 09 -->
+    <section id="gotchas">
+      <h2><span class="snum">09</span> Gotchas &amp; checklist</h2>
+      <p class="lede">Review these before you finish.</p>
+      <div class="card">
+        <ul class="clean">
+          <li><strong>Wrong asset type.</strong> Templates need <code class="inline">OfficeTemplateLibrary</code>. The default is an image library.</li>
+          <li><strong>Same-site rule.</strong> Every OAL for images and templates sits on one shared site.</li>
+          <li><strong>30-library cap.</strong> A single org supports up to 30 organization asset libraries total.</li>
+          <li><strong>Must be .potx.</strong> PowerPoint templates must be <code class="inline">.potx</code>. A <code class="inline">.pptx</code> does not work. Word uses <code class="inline">.dotx</code>, Excel uses <code class="inline">.xltx</code>.</li>
+          <li><strong>Web is license-gated.</strong> Without E3 or E5, the org tab does not appear in PowerPoint for the web.</li>
+          <li><strong>Propagation time.</strong> Desktop apps take up to 24 hours to show the library. Do not declare failure early.</li>
+          <li><strong>Read access, the top failure.</strong> <em>"Everyone except external users"</em> must have <strong>Read</strong> on the <strong>document library</strong> before you register. Granting it on the site alone fails the command. Users also need read on the org root site.</li>
+        </ul>
+      </div>
+      <div class="footer-note">
+        <strong>Sources:</strong> Microsoft Learn. <a href="https://learn.microsoft.com/en-us/sharepoint/organization-assets-library" target="_blank" rel="noopener">Create an organization assets library</a> (admin setup, OAL types, PowerShell, doc updated 2026-04-04) ·
+        <a href="https://learn.microsoft.com/en-us/powershell/module/sharepoint-online/add-spoorgassetslibrary" target="_blank" rel="noopener">Add-SPOOrgAssetsLibrary</a> cmdlet reference ·
+        Microsoft Support. <a href="https://support.microsoft.com/en-US/PowerPoint/use-your-organization-s-templates-in-powerpoint" target="_blank" rel="noopener">Use your organization's templates in PowerPoint</a> (§07 retrieval steps) ·
+        <a href="https://support.microsoft.com/en-US/PowerPoint/create-and-save-a-powerpoint-template" target="_blank" rel="noopener">Create and save a PowerPoint template</a> (§03 build/save steps).
+        Verify exact versions and licensing against the live docs before rollout.
+      </div>
+      <div class="footer-note" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;">
+        <span>Updated June 21, 2026</span>
+        <span>Unofficial community resource. Not affiliated with Microsoft. &middot; <a href="https://learn.microsoft.com/en-us/sharepoint/organization-assets-library" target="_blank" rel="noopener">Microsoft Learn</a></span>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  // Theme toggle (Light / Dark / Reading) with persistence
+  (function () {
+    const toggle = document.getElementById('themeToggle');
+    const btns = Array.from(toggle.querySelectorAll('button'));
+    function current() { return document.documentElement.getAttribute('data-theme') || 'light'; }
+    function sync() {
+      const t = current();
+      btns.forEach(b => b.classList.toggle('active', b.dataset.themeVal === t));
+    }
+    btns.forEach(b => b.addEventListener('click', () => {
+      const t = b.dataset.themeVal;
+      document.documentElement.setAttribute('data-theme', t);
+      try { localStorage.setItem('oalTheme', t); } catch (e) {}
+      sync();
+    }));
+    sync();
+  })();
+</script>
+<script>
+  // Personalize: live-fill tenant / site / library into every URL & command
+  (function () {
+    const DEFAULTS = { tenant: 'contoso', site: 'branding', lib: 'Templates' };
+    const inputs = {
+      tenant: document.getElementById('inp-tenant'),
+      site: document.getElementById('inp-site'),
+      lib: document.getElementById('inp-lib')
+    };
+    const note = document.getElementById('savedNote');
+    let noteTimer = null;
+
+    // Strip protocol, sharepoint host, /sites/, slashes. Keep the slug.
+    function clean(key, raw) {
+      let v = (raw || '').trim();
+      if (!v) return '';
+      v = v.replace(/^https?:\/\//i, '');
+      if (key === 'tenant') {
+        v = v.replace(/-admin\.sharepoint\.com.*$/i, '');
+        v = v.replace(/\.sharepoint\.com.*$/i, '');
+      }
+      v = v.replace(/^\/+|\/+$/g, '');     // trim slashes
+      v = v.replace(/^sites\//i, '');       // drop leading "sites/"
+      v = v.split('/')[0];                  // first path segment only
+      return v;
+    }
+
+    function apply() {
+      ['tenant', 'site', 'lib'].forEach(key => {
+        const val = clean(key, inputs[key].value) || DEFAULTS[key];
+        document.querySelectorAll('.v-' + key).forEach(el => { el.textContent = val; });
+      });
+    }
+
+    function save() {
+      try {
+        localStorage.setItem('oalPersonalize', JSON.stringify({
+          tenant: inputs.tenant.value, site: inputs.site.value, lib: inputs.lib.value
+        }));
+      } catch (e) {}
+      if (note) {
+        note.classList.add('show');
+        clearTimeout(noteTimer);
+        noteTimer = setTimeout(() => note.classList.remove('show'), 1200);
+      }
+    }
+
+    function restore() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('oalPersonalize') || '{}');
+        if (saved.tenant) inputs.tenant.value = saved.tenant;
+        if (saved.site) inputs.site.value = saved.site;
+        if (saved.lib) inputs.lib.value = saved.lib;
+      } catch (e) {}
+    }
+
+    Object.values(inputs).forEach(inp => {
+      inp.addEventListener('input', apply);
+      inp.addEventListener('change', () => {
+        ['tenant', 'site', 'lib'].forEach(key => {
+          if (inputs[key] === inp) {
+            const c = clean(key, inp.value);
+            if (c) inp.value = c;
+          }
+        });
+        apply(); save();
+      });
+    });
+    document.getElementById('resetPersonalize').addEventListener('click', () => {
+      inputs.tenant.value = ''; inputs.site.value = ''; inputs.lib.value = '';
+      apply();
+      try { localStorage.removeItem('oalPersonalize'); } catch (e) {}
+    });
+
+    restore();
+    apply();
+  })();
+</script>
+<script>
+  // Scrollspy + progress
+  const links = Array.from(document.querySelectorAll('.nav a'));
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const pct = document.getElementById('pct');
+
+  let atBottom = false;
+  const observer = new IntersectionObserver((entries) => {
+    if (atBottom) return;
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+        const idx = sections.findIndex(s => s.id === id);
+        pct.textContent = Math.round(((idx + 1) / sections.length) * 100) + '%';
+      }
+    });
+  }, { rootMargin: '0px 0px -78% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Bottom-of-page guard: ensure the final section activates when the page
+  // can't scroll far enough to push it into the observer band.
+  function activate(id) {
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+    const idx = sections.findIndex(s => s.id === id);
+    pct.textContent = Math.round(((idx + 1) / sections.length) * 100) + '%';
+  }
+  window.addEventListener('scroll', () => {
+    atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 2;
+    if (atBottom) activate(sections[sections.length - 1].id);
+  }, { passive: true });
+
+  function copyCode(btn) {
+    const block = btn.parentElement;
+    const text = block.innerText.replace(/^Copy\s*/, '');
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.textContent; btn.textContent = 'Copied';
+      setTimeout(() => btn.textContent = old, 1400);
+    });
+  }
+</script>
+<script src="design-system.js"></script>
+</body>
+</html>

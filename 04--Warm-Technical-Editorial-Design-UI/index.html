@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A dense prediction-market probability terminal dashboard.">
+  <title>Mirofish Probability Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <a class="brand" href="#top" aria-label="Mirofish dashboard home">
+        <span class="logo-tile" aria-hidden="true"><span></span><span></span></span>
+        <span>Claude Fable 5 · <strong>Mirofish</strong></span>
+      </a>
+      <div class="header-status">
+        <span class="badge badge-live"><i></i> Live · Mainnet</span>
+        <span class="badge">Round <b id="roundNumber">07185</b></span>
+        <time id="utcClock" datetime="">--:--:-- UTC</time>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero-grid" aria-label="Round overview">
+        <article class="card hero-card">
+          <div class="eyebrow-row">
+            <span><i class="signal-dot"></i> Claude Fable 5 · Total P&L</span>
+            <span class="badge badge-alert">Crypto tail sniper</span>
+            <span class="badge">+ 41 BTC</span>
+          </div>
+          <p class="hero-figure"><span aria-hidden="true">⌘</span><span id="heroValue">412,973</span></p>
+          <div class="tag-row">
+            <span>Realized · anonymous</span>
+            <strong>5,944 trades</strong>
+            <span class="tag-success">71% win</span>
+            <strong>Sharpe 4.21</strong>
+          </div>
+          <div class="kpi-strip" role="group" aria-label="Performance window">
+            <button class="kpi-segment" type="button" aria-pressed="false" data-value="31,423">
+              <strong>+$31,423</strong><span>7D · 12.4% · APY</span>
+            </button>
+            <button class="kpi-segment" type="button" aria-pressed="false" data-value="29,247">
+              <strong>+$29,247</strong><span>30D · 8.7% · APY</span>
+            </button>
+            <button class="kpi-segment" type="button" aria-pressed="true" data-value="28,662">
+              <strong>+$28,662</strong><span>90D · 16.8% · APY</span>
+            </button>
+            <button class="kpi-segment" type="button" aria-pressed="false" data-value="14,276">
+              <strong>+$14,276</strong><span>YTD · 22.4% · APY</span>
+            </button>
+          </div>
+          <div class="address-row"><span>anon</span><code>0x9d0a ··· 4524</code><span class="badge badge-live"><i></i> Live · Mainnet</span></div>
+        </article>
+
+        <article class="card spark-card">
+          <header class="card-head">
+            <h2><i class="signal-dot neutral"></i> Top runs · BTC · Polymarket</h2>
+            <span>5 / 5</span>
+          </header>
+          <div class="spark-summary">
+            <p class="multiplier">×11<span>.38</span></p>
+            <p class="gain">+$31,423</p>
+          </div>
+          <div class="spark-meta"><span>APR <b>11.4%</b></span><span>YES × 6</span><span>ENTRY <b>$3,029</b></span><span>EXIT <b>$34,452</b></span></div>
+          <div class="spark-stage" data-chart="spark" aria-label="Positive return trend chart"></div>
+        </article>
+      </section>
+
+      <section class="card data-card" data-panel="lattice">
+        <header class="card-head">
+          <h2><i class="signal-dot"></i> Probability Lattice · 5,944 Trades, One Board</h2>
+          <span>Every trade · One ball · Volatility gates · Edge tilts the board</span>
+        </header>
+        <div class="panel-layout">
+          <aside class="stat-rail">
+            <p class="rail-heading">Live convergence</p>
+            <dl>
+              <div><dt>Balls dropped</dt><dd>723</dd></div>
+              <div><dt>Landed green</dt><dd class="positive">72.3%</dd></div>
+              <div><dt>EV / trade</dt><dd class="positive">+$88</dd></div>
+              <div><dt>Session P&L</dt><dd class="positive">+$48,076</dd></div>
+            </dl>
+            <div class="rail-rule"></div>
+            <dl>
+              <div><dt>All-time</dt><dd>5,944</dd></div>
+              <div><dt>Realized</dt><dd class="positive">+$401,819</dd></div>
+            </dl>
+            <p class="rail-note">Law of large numbers · the edge only gets repetition.</p>
+          </aside>
+          <div class="chart-frame chart-tall">
+            <div class="chart-bar"><span>Quincunx · 8 gates · 100 × 56</span><span>Loss · 28% &nbsp; / &nbsp; Profit · 72%</span></div>
+            <div class="chart-stage" data-chart="lattice" aria-label="Trade probability lattice and outcome histogram"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card data-card carousel-panel" data-panel="ridge">
+        <button class="carousel-control prev" type="button" aria-label="Previous analysis panel">‹</button>
+        <header class="card-head">
+          <h2><i class="signal-dot neutral"></i> Probability Ridge · Strike Landscape</h2>
+          <span>Every ridge · One session · Strike · Payout frontier · Tails</span>
+        </header>
+        <div class="panel-layout">
+          <aside class="stat-rail">
+            <p class="rail-heading">Session · Live</p>
+            <dl>
+              <div><dt>Sessions</dt><dd>1,305</dd></div>
+              <div><dt>Tail mass</dt><dd>4.38%</dd></div>
+              <div><dt>Implied volt</dt><dd>+22.8</dd></div>
+              <div><dt>Avg drift</dt><dd>1.2σ</dd></div>
+            </dl>
+            <div class="rail-rule"></div>
+            <dl>
+              <div><dt>Best hit</dt><dd class="positive">+$81.2</dd></div>
+              <div><dt>All-time</dt><dd>5,944</dd></div>
+              <div><dt>Realized</dt><dd class="positive">+$401,819</dd></div>
+            </dl>
+            <p class="rail-note">Pinned into the tail · hundreds of bets at strike spread.</p>
+          </aside>
+          <div class="chart-frame chart-tall">
+            <div class="chart-bar"><span>Price-target density · Crypto targets</span><span>Tail zone · Payout →</span></div>
+            <div class="chart-stage" data-chart="ridge" aria-label="Layered strike probability density ridges"></div>
+          </div>
+        </div>
+        <button class="carousel-control next" type="button" aria-label="Next analysis panel">›</button>
+      </section>
+
+      <section class="card data-card" data-panel="graph">
+        <header class="card-head">
+          <h2><i class="signal-dot neutral"></i> Mirofish · Relationship Graph Simulation</h2>
+          <span>Nodes 70 · Edges 311 · Signal 92.1% · Iter 5780</span>
+        </header>
+        <div class="graph-layout">
+          <aside class="stat-rail legend-rail">
+            <p class="rail-heading">Node class</p>
+            <ul class="legend-list">
+              <li data-tone="bear">Bear signal</li><li data-tone="bull">Bull signal</li>
+              <li data-tone="median">Median path</li><li data-tone="neutral">Catalyst</li><li data-tone="hub">Cluster hub</li>
+            </ul>
+            <div class="rail-rule"></div>
+            <dl>
+              <div><dt>Bear paths</dt><dd class="negative">714</dd></div>
+              <div><dt>Bull paths</dt><dd>1,289</dd></div>
+              <div><dt>Paths sim</dt><dd>1,956</dd></div>
+              <div><dt>Iter / sec</dt><dd>290</dd></div>
+              <div><dt>Convergence</dt><dd>99%</dd></div>
+            </dl>
+            <div class="meter-block" data-meter="92"><span>Confidence <b>92%</b></span><i></i></div>
+          </aside>
+          <div class="chart-frame chart-tall">
+            <div class="chart-stage" data-chart="network" aria-label="Relationship graph of prediction market signals"></div>
+          </div>
+          <aside class="stat-rail outcome-rail">
+            <dl>
+              <div><dt>P(up)</dt><dd class="positive">0.64</dd></div>
+              <div><dt>P(down)</dt><dd class="negative">0.36</dd></div>
+              <div><dt>Edge vs book</dt><dd class="positive">+20¢</dd></div>
+              <div><dt>Confidence</dt><dd>92.1%</dd></div>
+            </dl>
+            <div class="mini-chart" data-chart="distribution" aria-label="Edge distribution mini histogram"></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="status-bar">
+      <span>Round 07185 · 5,944 fills · latency 18ms</span>
+      <span>Seeded simulation · v1.0</span>
+    </footer>
+  </div>
+
+  <button class="sound-toggle" type="button" aria-pressed="true" aria-label="Toggle ambient sound visualization">
+    <span class="sound-waves" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  </button>
+  <script src="app.js"></script>
+</body>
+</html>
